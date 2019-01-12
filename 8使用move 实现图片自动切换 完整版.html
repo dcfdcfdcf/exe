@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+*{margin:0;padding:0;list-style:none;}
+#picBox{width:600px;height:300px;border:4px solid red;margin:50px auto;text-align:center;position:relative;overflow:hidden;}
+#picBox img{width:300px;height:300px;}
+.imgP{width:100%;position:absolute;left:0;height:24px;background:rgba(0,0,0,0.5);color:white;font-size:14px;font-family:'SimSun';line-height:24px;}
+.imgNums{top:0;}
+.imgInfo{bottom:0;}
+.btn{display:block;position:absolute;width:30px;height:50px;line-height:50px;top:50%;margin-top:-25px;background:rgba(0,0,0,0.5);cursor:pointer;color:#fff;font-size:18px;font-family:'SimSun';}
+.btnPrev{left:0;}
+.btnNext{right:0;}
+.dots{height:10px;line-height:10px;position:absolute;bottom:30px;left:0;text-align:center;width:100%;}
+.dots i{display:inline-block;width:20px;height:20px;background:red; text-align:center;color:#fff;line-height:20px;font-style:normal;cursor:pointer;margin-right:5px;}
+.dots i.active{background:blue;}
+#picBox ul{width:1200px;height:300px;position:absolute;top:0;left:0;}
+#picBox li{float:left;width:600px;height:300px;}
+
+</style>
+<body>
+
+<div id="picBox">
+    <ul><!-- ul的宽度 = liWidth*liLen -->
+		<!--<li><a href="#"><img src="img/01.jpg"></a></li>
+		<li><a href="#"><img src="img/02.jpg"></a></li>
+		<li><a href="#"><img src="img/03.jpg"></a></li>
+		<li><a href="#"><img src="img/04.jpg"></a></li>-->
+    </ul>
+    <span class="btn btnPrev">&lt;</span>
+    <span class="btn btnNext">&gt;</span>
+    <div class="dots">
+    	<!--<i class="active">1</i>
+    	<i>2</i>
+    	<i>3</i> 里面的每一个按钮都是动态生成的。 -->
+    </div>
+</div>
+<div id="oooo"></div>
+</body>
+</html>
+<script src="tool.js"></script>
+
+<script>
+
+var imgSrc = [ 'img/01.jpg','img/02.jpg','img/03.jpg' ];
+
+
+var oDiv = document.getElementById('picBox');
+
+//扩展的
+var ooo = document.getElementById('oooo');
+
+var oUl = oDiv.getElementsByTagName('ul')[0];
+var aLi = oUl.getElementsByTagName('li');
+
+var len = imgSrc.length;
+var oPrev = oDiv.getElementsByTagName('span')[0];
+var oNext = oDiv.getElementsByTagName('span')[1];
+var oDot = oDiv.getElementsByTagName('div')[0];
+var aDot = oDot.getElementsByTagName('i');
+
+var num = 0;
+var str = '';
+var str1 = '';
+for(var i=0;i<len;i++)
+{
+	str+='<li><a href="#"><img src="'+ imgSrc[i] +'"></a><a href="#"><img src="'+ imgSrc[i] +'"></a></li>';
+	str1+='<i>'+(i+1)+'</i>';
+};
+oUl.innerHTML = str+str;
+oDot.innerHTML = str1;
+
+
+
+var liWidth = parseInt( getStyle( aLi[0],'width' ) );
+
+//console.log( liWidth );
+
+oUl.style.width = liWidth*len*2+'px';
+
+
+/*
+	规律：
+		0  0*300
+		1  -1*300
+		2  -2*300
+*/
+
+//初始化
+changePic();
+function changePic()
+{
+	for(var i=0;i<len;i++)
+	{
+		aDot[i].className = '';
+	};//清空所有的按钮样式
+	
+	//aDot[num].className = 'active';// 0 1 2
+	
+	if( num==len )
+	{
+		aDot[0].className = 'active';// 0 1 2
+		ooo.innerHTML = (0+1)+'/'+len;
+	}
+	else
+	{
+		aDot[num].className = 'active';// 0 1 2
+		ooo.innerHTML = (num+1)+'/'+len;
+	};
+	
+	//oUl.style.left = -num*liWidth+'px';
+	move( oUl,'left',-num*liWidth );
+	
+	
+	
+};
+
+var timer = null;
+timer = setInterval( next,4000 );
+
+//下一张的功能
+function next()
+{
+	//num++;
+	
+	if( num==len )//len = 3;
+	{
+		//num=0;
+		num=1;
+		oUl.style.left = 0;
+	}
+	else
+	{
+		num++;//1 2 3num == len
+	};
+	
+	changePic();
+};
+
+function prev()
+{
+	//num--;
+	
+	if( num > 0 )
+	{
+		num--;
+	}
+	else
+	{
+		num=len-1;
+		oUl.style.left = -len*liWidth+'px';
+	};
+	
+	changePic();
+};
+
+
+oNext.onclick = function()
+{
+	next();
+};
+oPrev.onclick = function()
+{
+	prev();
+};
+
+for(var i=0;i<len;i++)
+{
+	aDot[i].index = i;
+	aDot[i].onclick = function()
+	{
+		num = this.index;
+		changePic();
+	};
+};
+
+oDiv.onmouseover = function()
+{
+	clearInterval( timer );
+};
+oDiv.onmouseout = function()
+{
+	timer = setInterval( next,2000 );
+};
+</script>
+
+

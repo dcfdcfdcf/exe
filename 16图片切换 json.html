@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+*{margin:0;padding:0;}
+#picBox{width:300px;height:300px;border:4px solid red;margin:50px auto;text-align:center;position:relative;background:url(img/loader_ico.gif) center center no-repeat;}
+#picBox img{width:300px;height:300px;}
+.imgP{width:100%;position:absolute;left:0;height:24px;background:rgba(0,0,0,0.5);color:white;font-size:14px;font-family:'SimSun';line-height:24px;}
+.imgNums{top:0;}
+.imgInfo{bottom:0;}
+.btn{display:block;position:absolute;width:30px;height:50px;line-height:50px;top:50%;margin-top:-25px;background:rgba(0,0,0,0.5);cursor:pointer;color:#fff;font-size:18px;font-family:'SimSun';}
+.btnPrev{left:0;}
+.btnNext{right:0;}
+.dots{height:10px;line-height:10px;position:absolute;bottom:30px;left:0;text-align:center;width:100%;}
+.dots i{display:inline-block;width:10px;height:10px;border-radius:50%;background:red; text-indent:-999em;overflow:hidden;margin-right:5px;}
+.dots i.active{background:blue;}
+</style>
+<body>
+<div id="picBox">
+	<img src="">
+    <p class="imgP imgNums">加载中...</p>
+    <p class="imgP imgInfo">加载中...</p>
+    <span class="btn btnPrev">&lt;</span>
+    <span class="btn btnNext">&gt;</span>
+    <div class="dots">
+    	<!--<i class="active">1</i>
+    	<i>2</i>
+    	<i>3</i> 里面的每一个按钮都是动态生成的。 -->
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+var oPicBox = document.getElementById('picBox');
+var oImg = oPicBox.getElementsByTagName('img')[0];
+var oNums = oPicBox.getElementsByTagName('p')[0];
+var oInfo = oPicBox.getElementsByTagName('p')[1];
+var oPrev = oPicBox.getElementsByTagName('span')[0];
+var oNext = oPicBox.getElementsByTagName('span')[1];
+var oBtnCon = oPicBox.getElementsByTagName('div')[0];
+var aBtns = oPicBox.getElementsByTagName('i');
+
+//var imgSrc = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+//var imgTitle = ['美女一','美女二','美女三','美女四'];
+
+var imgData = {
+	
+	"imgSrc" : ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'],
+	"imgTitle" : ['美女一','美女二','美女三','美女四']
+};
+
+console.log( imgData.imgSrc );
+console.log( imgData );
+
+var len = imgData.imgSrc.length;
+
+var num = 0;//初始化数据用的。
+
+
+//追加按钮
+var str = '';//为了按钮元素的字符拼接
+for(var i=0;i<len;i++)
+{
+	str+='<i>';
+		str+=(i+1);
+	str+='</i>';
+};
+oBtnCon.innerHTML = str;
+
+//初始化页面
+
+function changePic()
+{
+	for(var i=0;i<len;i++)
+	{
+		aBtns[i].className = '';
+	};
+	oImg.src = imgData.imgSrc[num];
+	oInfo.innerHTML = imgData.imgTitle[num];
+	oNums.innerHTML = (num+1)+'/'+len;
+	aBtns[num].className = 'active';
+};
+
+changePic();
+
+for(var i=0;i<len;i++)
+{
+	aBtns[i].index = i;
+	aBtns[i].onclick = function()
+	{
+		num = this.index;
+		
+		changePic();
+	};
+};
+
+
+oNext.onclick = function()
+{
+	
+	num++;
+	
+	if( num == len )
+	{
+		num = 0;
+	};
+	
+	changePic();
+	
+};
+
+oPrev.onclick = function()
+{
+	num--;
+	
+	if( num < 0 )
+	{
+		num = len - 1;
+	};
+	
+	changePic();
+};
+
+
+</script>

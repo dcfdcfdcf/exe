@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+ <script type="text/javascript">
+
+function browserRedirect()
+ {  
+
+		var sUserAgent = navigator.userAgent.toLowerCase();  
+		
+		var bIsIpad = sUserAgent.indexOf("ipad") != -1;  
+		var bIsIphoneOs = sUserAgent.indexOf("iphone os") != -1;  
+		var bIsMidp = sUserAgent.indexOf("midp") != -1;  
+		var bIsUc7 = sUserAgent.indexOf("rv:1.2.3.4") != -1;  
+		var bIsUc = sUserAgent.indexOf("ucweb") != -1;  
+		var bIsAndroid = sUserAgent.indexOf("android") != -1;  
+		var bIsCE = sUserAgent.indexOf("windows ce") != -1;  
+		var bIsWM = sUserAgent.indexOf("windows mobile") != -1;  
+		var bIsBB = sUserAgent.indexOf("bb10") != -1;  
+
+		console.log( sUserAgent );
+		//console.log( bIsAndroid );
+
+		if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM || bIsBB) {  
+			//window.location.href = 'http://www.ujiuye.com/m/webqianduan/';  
+			console.log( '移动端' );
+		} 
+		else
+		{
+			console.log( 'PC端' );
+		}
+
+	};  
+browserRedirect();
+
+</script>

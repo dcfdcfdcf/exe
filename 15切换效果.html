@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+
+*{margin:0;padding:0;list-style:none;}
+#div1{width:300px;margin:50px auto;border:2px solid red;}
+.tab{height:30px;line-height:30px;}
+.tab span{display:inline-block;padding:5px 10px;margin-right:5px;background:black;color:#fff;cursor:pointer;}
+.tab span.active{background:blue;}
+.list{display:none;padding:10px 5px;}
+.list li{line-height:24px;font-size:14px;font-family:'SimSun';border-bottom:3px dashed yellow;}
+.list li dd{color:#999;display:none;}
+.list li.active dd{display:block;}
+</style>
+<body>
+
+<div id="div1">
+	<p class="tab">
+    	<span class="active">菜单一</span>
+    	<span>菜单二</span>
+    	<span>菜单三</span>
+    </p>
+	<ul class="list" style="display:block;">
+   		<li class="">
+        	<dt>习近平接受八国新任驻华大使递交国书1</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+    </ul>
+	<ul class="list">
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书2</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+    </ul>
+	<ul class="list">
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书3</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+   		<li>
+        	<dt>习近平接受八国新任驻华大使递交国书</dt>
+            <dd>习近平接受八国新任驻华大使递交国书习近平接受八国新任驻华大使递交国书...</dd>
+        </li> 
+    </ul>
+    
+</div>
+
+</body>
+</html>
+
+<script>
+
+var oDiv = document.getElementById('div1');
+
+var aSpan = oDiv.getElementsByTagName('p')[0].getElementsByTagName('span');
+
+var aUl = oDiv.getElementsByTagName('ul');
+
+var len = aSpan.length;
+
+for(var i=0;i<len;i++)
+{
+	aSpan[i].index = i;
+	aSpan[i].onclick = function()
+	{
+		for(var i=0;i<len;i++)
+		{
+			aSpan[i].className = '';
+			aUl[i].style.display = 'none';
+		};
+		this.className = 'active';
+		aUl[this.index].style.display = 'block';
+	};
+	
+	
+};
+
+function tabSwitch( aLi )
+{
+	//var aLi = oDiv.getElementsByTagName('li')[0];//object 
+	
+	aLi.onmouseover = function()
+	{
+		this.className = 'active';
+	};
+	aLi.onmouseout = function()
+	{
+		this.className = '';
+	};
+};
+
+var aLi = oDiv.getElementsByTagName('li');//object 
+
+for(var i=0;i<aLi.length;i++)
+{
+	tabSwitch( aLi[i] );
+};
+
+//tabSwitch( aLi[0] );
+//tabSwitch( aLi[1] );
+</script>
