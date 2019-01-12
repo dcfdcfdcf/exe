@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+	.box1{position:relative;height:200px;width:200px;border:1px solid red;margin:0 atuo;overflow:hidden;}
+	ul{position:absolute;top:0;left:0;list-style:none;height:200px;margin:0;padding:0;clear:both;}
+	ul li{float:left;width:200px;}
+	ul li img{width:200px;height:200px;}
+	.dot{height:20px;width:200px;position:absolute;left:0;bottom:0;text-align:center;}
+	.dot i{display:inline-block;margin:0 2px;text-indent:999px;height:10px;width:10px;border-radius:50%;background:red;}
+	.dot i.hover{background:blue;}
+</style>
+</head>
+
+<body>
+<div class="box1">
+	<ul>
+    	<li><a href="javascript:;" target="_self"><img src="zuoye/2.jpg"></a></li>
+<!--    	<li><a href="javascript:;" target="_self"><img src="zuoye/3.jpg"></a></li>
+    	<li><a href="javascript:;" target="_self"><img src="zuoye/4.jpg"></a></li>
+    	<li><a href="javascript:;" target="_self"><img src="zuoye/5.jpg"></a></li>
+-->    </ul>
+    <div class="dot"></div>
+</div>
+</body>
+</html>
+<script>
+
+	var oUl = byClassName('box1')[0].getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+	var img = ["zuoye/2.jpg","zuoye/3.jpg","zuoye/4.jpg","zuoye/5.jpg","zuoye/1.jpg","zuoye/6.jpg","zuoye/7.jpg","zuoye/8.jpg"];
+	var oDot = byClassName('dot')[0];
+	var aDot = oDot.getElementsByTagName('i');
+	var timer = null;
+	var n = 0;
+	var str = '',str1 = '';
+	var len = img.length;
+	var liWidth = parseFloat(getStyle(aLi[0],'width'));
+	for(var i = 0; i < len;  i++)
+	{
+		str += 	'<li>'+(i + 1)+'<a href="javascript:;" target="_self"><img src='+ img[i] +'></a></li>'
+		str1 += '<i>'+(i + 1)+'</i>'
+	};
+	str += 	'<li>'+ 1+'<a href="javascript:;" target="_self"><img src='+ img[0] +'></a></li>'
+	oDot.innerHTML = str1;
+	oUl.innerHTML = str;
+	console.log(oUl)
+	oUl.style.width = liWidth * (len + 1) + 'px';
+	timer = setInterval(picChange,1000);
+	
+	
+	
+	
+	for(var i = 0; i < len; i ++)
+	{
+		aDot[i].index = i;
+		aDot[i].onmouseover = function()
+		{
+			n = this.index;
+			pic();
+		};	
+	};
+	function picChange()
+	{
+		if( n == len)
+		{
+			n = 1;
+			oUl.style.left = 0 + 'px';	
+		}
+		else
+		{
+			n++;
+		};
+		pic();
+	};
+	function pic ()
+	{
+		for(var i = 0; i < len; i ++)
+		{
+			aDot[i].className = '';	
+		};
+		aDot[n%len].className = 'hover';
+		move(oUl,'left',-n*liWidth)
+	};
+	
+	function move(obj,attr,target,endFn)
+	{
+		clearInterval(obj.timer)
+		obj.timer = setInterval(function(){
+		var dir = parseFloat(getStyle(obj,attr)) < target ? 10: -10;
+		var speed = parseFloat(getStyle(obj,attr)) + dir;
+		if(speed > target && dir > 0 || speed < target && dir < 0)
+		{
+			speed = target;
+			clearInterval(obj.timer);
+			endFn && endFn();	
+		};
+		obj.style[attr] = speed + 'px';
+			},30)	
+	};
+	function getStyle(obj,attr)
+	{
+		return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+	};
+	function byClassName(sClassName)
+	{
+		var arrEle = [];
+		var aEle = document.getElementsByTagName('*');
+		for(var i = 0; i < aEle.length; i ++ )
+		{
+			var aEleClasnm = aEle[i].className.split(' ');
+			for (var j = 0; j < aEleClasnm.length; j++ )
+			{
+				if(aEleClasnm[j] == sClassName)	
+				{
+					arrEle.push(aEle[i]);
+					break;	
+				};
+			}; 	
+		};
+		return arrEle;
+			
+	};
+</script>
